@@ -20,6 +20,9 @@ Run in Development
 
 > You will need to have a `.env` file with a `SESSION_SECRET` first.
 
+> Because of the way fastify's `watch` feature works, any changes to the database will cause it to reload.
+> Looking at working on a fix, [see below](#to-do).
+
 ```sh
 npm run dev
 ```
@@ -36,9 +39,9 @@ npm run test
 
 ## To-Do
 
-- [ ] Create authentication pages
-  - [ ] Login
-  - [ ] Register
+- [x] Create authentication pages
+  - [x] Login
+  - [x] Register
 - [ ] Create user pages
   - [ ] Purchase History
   - [ ] Cart
