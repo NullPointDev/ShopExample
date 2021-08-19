@@ -1,0 +1,34 @@
+extends layouts/default.pug
+
+block title
+	title Register - Shop
+
+block content
+	section#login
+		.container
+			#login-row.row.justify-content-center.align-items-center
+				#login-col.col-md-6
+					#login-card.card.px-3.col-md-12
+						form#login-form.form(action="/register",method="POST")
+							h3.text-center Register
+							if message
+								.fw-bold.text-danger.text-center= message
+							.form-group.mb-3
+								label.form-label(for="email") First Name
+								input.form-control(type="text", name="fName",required)
+							.form-group.mb-3
+								label.form-label(for="email") Last Name
+								input.form-control(type="text", name="lName",required)
+							.form-group.mb-3
+								label.form-label(for="email") E-Mail
+								input.form-control(type="email", name="email",required)
+							.form-group.mb-3
+								label.form-label(for="password") Password
+								input.form-control(type="password", name="password",required,minlength=8,maxlength=30)
+							.form-group.mb-3
+								p Already have an Account? 
+									a(href="/login") Log In
+								input.btn.btn-primary(type="submit", value="Log In")
+
+append head
+	link(rel="stylesheet", href="/css/forms.css")

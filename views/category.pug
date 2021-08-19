@@ -1,0 +1,13 @@
+extends layouts/default.pug
+include components/card.pug
+
+block title
+	title= `${category} - Shop`
+
+block content
+	section.p-5
+		unless items.length == 0
+			for item in item
+				+card(item)
+		else
+			p No Items

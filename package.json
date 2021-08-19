@@ -1,0 +1,37 @@
+{
+  "name": "ShopExample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "tap \"test/**/*.test.js\"",
+    "start": "fastify start -l info app.js",
+    "dev": "fastify start -w -l info -P app.js"
+  },
+  "keywords": [],
+  "author": "NullPointDev",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^7.4.3",
+    "dotenv": "^10.0.0",
+    "fastify": "^3.0.0",
+    "fastify-autoload": "^3.3.1",
+    "fastify-cli": "^2.13.0",
+    "fastify-cookie": "^5.3.1",
+    "fastify-formbody": "^5.1.0",
+    "fastify-plugin": "^3.0.0",
+    "fastify-sensible": "^3.1.0",
+    "fastify-session": "^5.2.1",
+    "fastify-static": "^4.2.3",
+    "point-of-view": "^4.15.1",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "tap": "^15.0.9"
+  }
+}

@@ -1,0 +1,21 @@
+extends layouts/default.pug
+include components/card.pug
+
+block title
+	title Home - Shop
+
+block content
+	section.p-5
+		h1 Hello, World!
+		p Lorem Ipsum dolor sit amet ...
+	section.py-5
+		.container.px-4.px-lg-5.mt-5
+			.row.gx-4.gx-lg-5.row-cols-1.row-cols-sm-2.row-cols-md-3.row-cols-xl-4.justify-content-center
+				.col.mb-5
+					+card({id:1, name: "Template", price: "$10"})
+				.col.mb-5
+					+card({id:2, name: "Example", price: "$1"})
+				.col.mb-5
+					+card({id:3, name: "Test", price: "$1"})
+				.col.mb-5
+					+card({id:4, name: "Foo", price: "$1"})
