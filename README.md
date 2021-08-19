@@ -20,9 +20,6 @@ Run in Development
 
 > You will need to have a `.env` file with a `SESSION_SECRET` first.
 
-> Because of the way fastify's `watch` feature works, any changes to the database will cause it to reload.
-> Looking at working on a fix, [see below](#to-do).
-
 ```sh
 npm run dev
 ```
@@ -52,4 +49,4 @@ npm run test
   - [ ] Product
 - [ ] Write Tests for auth API routes
 - [ ] Write Tests for front-end routes
-- [ ] Find solution to Fastify `watch` refreshing on DB update
+- [x] Find solution to Fastify `watch` refreshing on DB update
