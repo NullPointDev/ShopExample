@@ -59,3 +59,7 @@ profile*
 
 # environment variables
 .env
+
+# databases
+data
+*.db
