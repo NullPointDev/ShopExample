@@ -13,20 +13,23 @@ const messages = {
 	"exists": "An account with that Email address already exists."
 };
 
+// eslint-disable-next-line no-unused-vars
 module.exports = async function (fastify, opts) {
+	// Checks if the current session links to a valid user
+	// * If it does, return an object with the user's profile info (and cart)
+	// * Otherwise, return an empty object.
+	const getUser = (session) => session.user ? fastify.getUser(session.user.id) : {};
+
 	// Renders the home page template
 	fastify.get("/", async function (request, reply) {
-		// Set 'user' to...
-		// * If there is a current session, with a user, the user's profile (and cart)
-		// * Otherwise, an empty object.
-		// ! Yes, I'm aware this is probably terrible practice. Don't care.
-		const user = request.session.user ? fastify.getUser(request.session.user.id) : {};
+		const user = getUser(request.session);
 		return reply.view("index.pug", {user});
 	});
 
-	// Renders the registration template page.
-	// TODO: Redirect the user if they're already logged in
+	// Renders the registration template page
 	fastify.get("/register", async function (request, reply) {
+		const user = getUser(request.session);
+		if(user.id) return reply.redirect("/");
 		let message;
 		if(request.query.msg) {
 			message = messages[request.query.msg];
@@ -34,9 +37,10 @@ module.exports = async function (fastify, opts) {
 		return reply.view("register.pug", {message});
 	});
 
-	// Renders the login template page.
-	// TODO: Redirect the user if they're already logged in
+	// Renders the login template page
 	fastify.get("/login", async function (request, reply) {
+		const user = getUser(request.session);
+		if(user.id) return reply.redirect("/");
 		let message;
 		if(request.query.msg) {
 			message = messages[request.query.msg];
