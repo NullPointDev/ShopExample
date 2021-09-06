@@ -2,12 +2,19 @@ extends layouts/default.pug
 include components/card.pug
 
 block title
-	title= `${category} - Shop`
+	title= `${category.title} - Shop`
 
 block content
-	section.p-5
+	section.pt-5
+		.container
+			h1.display-4= category.title
+			p.lead= category.description
+	section
 		unless items.length == 0
-			for item in item
-				+card(item)
+			.container.px-4.px-lg-5.mt-5
+				.row.gx-4.gx-lg-5.row-cols-1.row-cols-sm-2.row-cols-md-3.row-cols-xl-4.justify-content-center
+					for item in items
+						.col.mb-5
+							+card(item)
 		else
-			p No Items
+			p No Items.

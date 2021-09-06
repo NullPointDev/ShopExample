@@ -45,7 +45,7 @@ npm run test
   - [ ] Purchase
 - [ ] Create Product Pages
   - [ ] Search
-  - [ ] Categories
+  - [x] Categories
   - [ ] Product
 - [ ] Write Tests for auth API routes
 - [ ] Write Tests for front-end routes

@@ -1,0 +1,13 @@
+extends ../layouts/default.pug
+
+block title
+	title 403 - Forbidden
+
+block content
+	.p-5.text-center
+		h1 Well, That's Awkward.
+		unless message
+			p Error 403 - Forbidden
+		else
+			p= message
+		a.btn.btn-primary(href="/") Go Home

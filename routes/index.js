@@ -22,8 +22,19 @@ module.exports = async function (fastify, opts) {
 
 	// Renders the home page template
 	fastify.get("/", async function (request, reply) {
-		const user = getUser(request.session);
-		return reply.view("index.pug", {user});
+		let items = fastify.db.prepare("SELECT id, name, price FROM item").all();
+		let user = getUser(request.session);
+		return reply.view("index.pug", {user, items});
+	});
+
+	fastify.get("/category/:c", async function (request, reply) {
+		let category = fastify.db.prepare("SELECT title, description FROM category WHERE name = ?").get(request.params.c);
+		let user = getUser(request.session);
+		if(!category) return reply.view("error/404.pug", {user});
+		else {
+			let items = fastify.db.prepare("SELECT id, name, price FROM item INNER JOIN categoryItem ON categoryItem.item = item.id WHERE categoryItem.category = ?").all(request.params.c);
+			return reply.view("category.pug", {user, category, items});
+		}
 	});
 
 	// Renders the registration template page
@@ -131,6 +142,7 @@ module.exports = async function (fastify, opts) {
 
 	// A Simple Lazy catch-all 404 error page.
 	fastify.get("*", async function (request, reply) {
-		return reply.view("error/404.pug");
+		let user = getUser(request.session);
+		return reply.view("error/404.pug", {user});
 	});
 };

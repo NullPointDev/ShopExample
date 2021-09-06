@@ -4,8 +4,8 @@ mixin card(product)
 		.card-body.p-4
 			.text-center
 				h5.fw-bolder= product.name
-				div= product.price
+				div= `$${product.price}`
 		.card-footer.p-4.pt-0.border-top-0.bg-transparent
 			.text-center.d-grid.gap-2
-				input.form-control.form-control(type="number", name="", value=1)
+				input.form-control.form-control(type="number", id=`num-${product.id}`, value=1)
 				a.btn.btn-outline-primary.mt-auto(id=`cart-${product.id}`,onClick=`addToCart(${product.id})`) Add to Cart

@@ -6,5 +6,8 @@ block title
 block content
 	.p-5.text-center
 		h1 Well, That's Awkward.
-		p Error 404 - Not Found
+		unless message
+			p Error 404 - Not Found
+		else
+			p= message
 		a.btn.btn-primary(href="/") Go Home
