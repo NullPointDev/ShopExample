@@ -22,17 +22,23 @@ module.exports = async function (fastify, opts) {
 
 	// Renders the home page template
 	fastify.get("/", async function (request, reply) {
+		// Get a list of all items
 		let items = fastify.db.prepare("SELECT id, name, price FROM item").all();
 		let user = getUser(request.session);
+		// Render index page with user info and item data
 		return reply.view("index.pug", {user, items});
 	});
 
 	fastify.get("/category/:c", async function (request, reply) {
+		// Gets information about the category from the DB
 		let category = fastify.db.prepare("SELECT title, description FROM category WHERE name = ?").get(request.params.c);
 		let user = getUser(request.session);
+		// If the category does not exist, show a 404 page.
 		if(!category) return reply.view("error/404.pug", {user});
 		else {
+			// Get a list of items that are in the category
 			let items = fastify.db.prepare("SELECT id, name, price FROM item INNER JOIN categoryItem ON categoryItem.item = item.id WHERE categoryItem.category = ?").all(request.params.c);
+			// Render the category page with user info, category info, and item data.
 			return reply.view("category.pug", {user, category, items});
 		}
 	});
