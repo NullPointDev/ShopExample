@@ -1,0 +1,35 @@
+extends layouts/default.pug
+
+block title
+	title Cart - Shop
+
+block content
+	section.py-5
+		.container
+			h1.display-4= `${user.fName} ${user.lName}'s Cart`
+	section.container
+		unless items.length == 0
+			table.table.table-striped
+				thead
+					tr
+						th(scope="col") Item
+						th(scope="col") Price
+						th(scope="col") Quantity
+						th(scope="col") Actions
+				tbody
+					for item in items
+						tr
+							td= item.name
+							td= `$${item.price.toFixed(2).replace(/[.,]00$/, "")}`
+							td(id=`qty-${item.id}`)= item.qty
+							td
+								a.btn.btn-primary(onClick=`editCartEntry(${item.id})`)
+									i.bi.bi-pencil-square
+								span  
+								a.btn.btn-danger(onClick=`deleteCartEntry(${item.id})`)
+									i.bi.bi-trash-fill
+			p
+				b Total: 
+				span= `$${items.reduce((a, b)=>{return a + (b.price*b.qty)}, 0).toFixed(2).replace(/[.,]00$/, "")}`
+		else
+			p No Items.

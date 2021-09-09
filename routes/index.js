@@ -9,7 +9,7 @@ const messages = {
 	"email": "Invalid Email address",
 	"pass": "Incorrect Password",
 	"registered": "Registration Complete, Please Log In.",
-	"priv": "You must be logged in to access that content.",
+	"priv": "You must be logged in to do that.",
 	"exists": "An account with that Email address already exists."
 };
 
@@ -27,6 +27,18 @@ module.exports = async function (fastify, opts) {
 		let user = getUser(request.session);
 		// Render index page with user info and item data
 		return reply.view("index.pug", {user, items});
+	});
+
+	fastify.get("/cart", async function (request, reply) {
+		let user = getUser(request.session);
+		// If the user is not signed in, redirect to login
+		if(!user.id) return reply.redirect("/login?msg=priv");
+		else {
+			// Gets a list of items that are in the user's cart
+			let items = fastify.db.prepare("SELECT item.id, item.name, item.price, cart.qty FROM cart JOIN item ON item.id = cart.item WHERE user = ?").all(user.id);
+			// Render the cart page with user info and cart data
+			return reply.view("cart.pug", {user, items});
+		}
 	});
 
 	fastify.get("/category/:c", async function (request, reply) {
@@ -136,7 +148,7 @@ module.exports = async function (fastify, opts) {
 			// Get the new account ID
 			const id = fastify.db.prepare("SELECT id FROM user WHERE email = ?").get(email);
 			// Log the user in (Start a session)
-			request.session.user = {id};
+			request.session.user = {id: id};
 			// Redirect the user to the home page
 			reply.redirect("/");
 		} catch(error) {
